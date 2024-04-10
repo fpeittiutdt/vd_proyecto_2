@@ -4,46 +4,33 @@
 
   /* Array donde guardaremos la data */
   let series = [];
-  let deportistas = [];
 
-  /* 1. Escala para edades, después lo decidimos */
-  let tamanio = d3.scaleLinear().range([10, 20]);
-  let grosor = d3.scaleLinear().range([5, 20]);
+  // Ve o no series
+  let watch_series = d3.scaleOrdinal().domain(["Si", "No"]).range([true, false])
 
-  /* 2. Escala para genero */
-  let colorGenero = d3
-    .scaleOrdinal()
-    .domain(["F", "M"])
-    .range(["#ffc0cb", "#c0f9ff"]);
+  // Cantidad promedio de capítulos vistos
+  let episodes = d3.scaleLinear().range([10, 20]);
 
-  /* 3. Escala para continentes */
-  let colorContinentes = d3
-    .scaleOrdinal()
-    .domain(["América", "África", "Asia", "Europa", "Oceanía"])
-    .range(["#ed334e", "#000000", "#fbb132", "#009fe3", "#00963f"]);
+  // Géneros favoritos
+  let genres = d3.scaleOrdinal().domain(["Drama", "Comedia", "Misterio", "Crimen", "Romance", "Ciencia Ficción"]).range(["blue", "yellow", "black", "black", "purple", "gree"]).unknown("orange")
 
-  /* 4. Escala para altura */
-  let radioAltura = d3.scaleRadial();
-
-  /* 5. Escala para medallas */
-  let colorMedalla = d3
-    .scaleOrdinal()
-    .domain(["Oro", "Plata", "Bronce"])
-    .range(["gold", "silver", "brown"]);
+  // Plataformas
+  let platforms = d3.scaleOrdinal().domain(["Netflix", "Disney+", "Star+", "HBO", "Amazon Prime"]).range(["nombres de archivo"]).unknown("nombres de archivo")
+  
+  // Rating de la serie favorita
+  let rating = d3.scaleLinear().range([0,4])
 
   onMount(() => {
-    d3.csv("./data/deportistas.csv", d3.autoType).then((data) => {
+    d3.csv("./data/series.csv", d3.autoType).then((data) => {
       console.log(data);
 
-      /* Actualizamos dominio con la data de edad */
-      let minMaxEdad = d3.extent(data, (d) => d.edad);
-      grosor = grosor.domain(minMaxEdad);
+      let minMaxEpisodes = d3.extent(data, (d) => d.episodes);
+      episodes = episodes.domain(minMaxEpisodes);
 
-      /* Actualizamos dominio y rango con la data de altura */
-      let minMaxAltura = d3.extent(data, (d) => d.altura);
-      radioAltura = radioAltura.domain(minMaxAltura).range([25, 50]);
+      let minMaxRating = d3.extent(data, (d) => d.favRate);
+      rating = rating.domain(minMaxRating);
 
-      deportistas = data;
+      series = data;
     });
   });
 </script>
