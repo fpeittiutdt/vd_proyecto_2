@@ -12,7 +12,7 @@
   let episodes = d3.scaleLinear().range([10, 20]);
 
   // Géneros favoritos
-  let genres = d3.scaleOrdinal().domain(["Drama", "Comedia", "Misterio", "Crimen", "Romance", "Ciencia Ficción"]).range(["blue", "yellow", "black", "black", "purple", "gree"]).unknown("orange")
+  let genres = d3.scaleOrdinal().domain(["Drama", "Comedia", "Misterio", "Crimen", "Romance", "Ciencia Ficción"]).range(["blue", "yellow", "black", "black", "purple", "green"]).unknown("orange")
 
   // Plataformas
   let platforms = d3.scaleOrdinal().domain(["Netflix", "Disney+", "Star+", "HBO", "Amazon Prime"]).range(["nombres de archivo"]).unknown("nombres de archivo")
@@ -33,21 +33,38 @@
       series = data;
     });
   });
+
 </script>
 
 <main>
   <div class="header">
-    <img src="/images/olympics-logo.png" width="100" alt="anillos" />
+    <img src="/images/Movie.svg" width="100" alt="movie" />
     <h3 class="headline">
-      <b>Triunfos Olímpicos</b>
-      Medallas, alturas y continentes
+      <b>Gustos de series</b>
+      Serie favorita, generos y plataformas
     </h3>
-    <p class="bajada">Explorando los logros olímpicos a través de datos</p>
+    <p class="bajada">Explorando los gustos a traves de datos</p>
   </div>
 
   <!-- Conedor de las entidades -->
   <div class="container">
-    <!-- Iteramos la data para visualizar c/ entidad -->
+    {#each series as entry}
+    <div class="circle-entry">
+      {#if entry.favRate < 6}    
+      <div class="data-entry">
+        <img src = "/images/Blob1.svg" alt="blob">
+      </div>
+      {:else if entry.favRate >= 6}
+      <div class="data-entry">
+        <img src = "/images/Blob2.svg" alt="blob">
+      </div>
+      {/if}
+      <div class="small-circle"></div> <!-- Agregar más si necesitas múltiples círculos -->
+    </div>    
+    {/each}
+  </div>
+  <!--  <div class="container">
+    Iteramos la data para visualizar c/ entidad
     {#each deportistas as dep}
       <div class="person-container">
         <div
@@ -69,10 +86,47 @@
         </p>
       </div>
     {/each}
-  </div>
+  </div> -->
 </main>
 
 <style>
+
+  .blob1{
+    fill: red;
+  }
+
+  .small-circle {
+  width: 40px;
+  height: 40px;
+  background-color: red; /* Elige el color que prefieras */
+  border-radius: 50%;
+  position: absolute;
+  /* Ajustar top y left para posicionar correctamente */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translate(100px, 0);
+}
+
+.small-circle:nth-child(1) {
+  transform: translate(-50%, -50%) rotate(0deg) translate(100px) rotate(0deg);
+}
+.small-circle:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(45deg) translate(100px) rotate(-45deg);
+}
+.small-circle:nth-child(3) {
+  transform: translate(-50%, -50%) rotate(90deg) translate(100px) rotate(-90deg);
+}
+/* Añadir más según sea necesario, ajustando los grados de rotación */
+
+
+  .circle-entry{
+    position: relative;
+    height: 200px;
+    border: 3px black solid;
+    width: 200px;
+    border-radius: 50%;
+  }
+
   .header {
     display: flex;
     justify-content: center;
