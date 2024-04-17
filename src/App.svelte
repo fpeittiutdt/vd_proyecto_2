@@ -9,7 +9,7 @@
   let watch_series = d3.scaleOrdinal().domain(["Si", "No"]).range([true, false])
 
   // Cantidad promedio de capítulos vistos
-  let episodes = d3.scaleLinear().range([10, 20]);
+  let episodes = d3.scaleLinear().range([100, 200]);
 
   // Géneros favoritos
   let genres = d3.scaleOrdinal().domain(["Drama", "Comedia", "Misterio", "Crimen", "Romance", "Ciencia Ficción"]).range(["blue", "yellow", "black", "black", "purple", "green"]).unknown("orange")
@@ -18,7 +18,7 @@
   let platforms = d3.scaleOrdinal().domain(["Netflix", "Disney+", "Star+", "HBO", "Amazon Prime"]).range(["nombres de archivo"]).unknown("nombres de archivo")
   
   // Rating de la serie favorita
-  let rating = d3.scaleLinear().range([0,4])
+  let rating = d3.scaleQuantize().range([1,5]).unknown(0)
 
   onMount(() => {
     d3.csv("./data/series.csv", d3.autoType).then((data) => {
@@ -32,7 +32,22 @@
 
       series = data;
     });
+
   });
+
+
+  function transformar(n){ // Número de vértices (triángulo)
+    const radius = 100; // Radio del círculo grande
+    let smallCircles = [];
+    for (let i = 0; i < n; i++) {
+      const angle = (2 * Math.PI / n) * i;
+      const x = radius * Math.cos(angle);
+      const y = radius * Math.sin(angle);
+      smallCircles.push({ x, y });
+    }
+    console.log(smallCircles);
+    return smallCircles;
+  }
 
 </script>
 
@@ -50,16 +65,28 @@
   <div class="container">
     {#each series as entry}
     <div class="circle-entry">
-      {#if entry.favRate < 6}    
       <div class="data-entry">
-        <img src = "/images/Blob1.svg" alt="blob">
-      </div>
-      {:else if entry.favRate >= 6}
-      <div class="data-entry">
-        <img src = "/images/Blob2.svg" alt="blob">
-      </div>
+        {#if watch_series(entry.watch)}
+        <img src="/images/Blob{rating(entry.favRate)}.svg" alt="vacio" width = "{episodes(entry.episodes)}px" height =  "{episodes(entry.episodes)}px">
+      
+      {:else}
+        <img src="/images/Blob{rating(entry.favRate)}.svg" alt="vacio" width = "150px" height =  "150px">
       {/if}
-      <div class="small-circle"></div> <!-- Agregar más si necesitas múltiples círculos -->
+      </div>
+      
+      {#each transformar(5) as {x, y}}
+        <div class="small-circle" style="transform: translate({x}px, {y}px);">
+          <img src="/images/minus.svg" alt=({x},{y}) class="minus">
+        </div> <!-- Agregar más si necesitas múltiples círculos -->
+      {/each}
+      <!--<div class="small-circle">
+        <img src="/images/minus.svg" alt="minus" class="minus">
+      </div>
+      
+      <div class="small-circle">
+        <img src="/images/minus.svg" alt="minus" class="minus">
+      </div> -->
+    
     </div>    
     {/each}
   </div>
@@ -91,8 +118,15 @@
 
 <style>
 
-  .blob1{
-    fill: red;
+  :global(body){
+  }
+
+
+  .minus{
+    /*position: relative; para centrar "manualmente"
+    left: 20%;
+    top: 10%;*/
+    width: 20px;
   }
 
   .small-circle {
@@ -101,20 +135,16 @@
   background-color: red; /* Elige el color que prefieras */
   border-radius: 50%;
   position: absolute;
+  display: flex;
+  justify-content: center;
   /* Ajustar top y left para posicionar correctamente */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translate(100px, 0);
-}
+  }
 
-.small-circle:nth-child(1) {
-  transform: translate(-50%, -50%) rotate(0deg) translate(100px) rotate(0deg);
-}
-.small-circle:nth-child(2) {
-  transform: translate(-50%, -50%) rotate(45deg) translate(100px) rotate(-45deg);
+/*.small-circle:nth-child(2) {
+  transform: translate(-50%, -50%) rotate(-90deg) translate(100px) rotate(90deg);
 }
 .small-circle:nth-child(3) {
-  transform: translate(-50%, -50%) rotate(90deg) translate(100px) rotate(-90deg);
+  transform: translate(-200%, -100%) rotate(90deg) translate(100px) rotate(-90deg);
 }
 /* Añadir más según sea necesario, ajustando los grados de rotación */
 
@@ -122,9 +152,14 @@
   .circle-entry{
     position: relative;
     height: 200px;
-    border: 3px black solid;
+    border: 1.5px black solid;
     width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
+    margin-bottom: 50px;
+    margin-right: 20px;
   }
 
   .header {
