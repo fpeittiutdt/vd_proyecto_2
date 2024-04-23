@@ -15,14 +15,19 @@
   let genres = d3.scaleOrdinal().domain(["Drama", "Comedia", "Misterio", "Crimen", "Romance", "Ciencia Ficción"]).range(["blue", "yellow", "black", "black", "purple", "green"]).unknown("orange")
 
   // Plataformas
-  let platforms = d3.scaleOrdinal().domain(["Netflix", "Disney+", "Star+", "HBO", "Amazon Prime"]).range(["nombres de archivo"]).unknown("nombres de archivo")
+  let platforms = d3.scaleOrdinal().domain(["Netflix", "Disney+", "Star+", "HBO", "Amazon Prime"]).range(["moon", "plus", "star", "asterisk", "cross"]).unknown("minus")
   
   // Rating de la serie favorita
-  let rating = d3.scaleQuantize().range([1,5]).unknown(0)
+  let rating = d3.scaleLinear().range([1,5]).unknown(0);
+
+  function divide_platforms(s){
+    let res = s.split(", ");
+    console.log(res);
+    return res;
+  }
 
   onMount(() => {
     d3.csv("./data/series.csv", d3.autoType).then((data) => {
-      console.log(data);
 
       let minMaxEpisodes = d3.extent(data, (d) => d.episodes);
       episodes = episodes.domain(minMaxEpisodes);
@@ -31,6 +36,7 @@
       rating = rating.domain(minMaxRating);
 
       series = data;
+      console.log(rating(8.095));
     });
 
   });
@@ -65,20 +71,23 @@
   <div class="container">
     {#each series as entry}
     <div class="circle-entry">
-      <div class="data-entry">
         {#if watch_series(entry.watch)}
-        <img src="/images/Blob{rating(entry.favRate)}.svg" alt="vacio" width = "{episodes(entry.episodes)}px" height =  "{episodes(entry.episodes)}px">
-      
+          {#each transformar(divide_platforms(entry.platforms).length) as {x, y}, i}
+          <div class="small-circle" style="transform: translate({x}px, {y}px);">
+            <img src="/images/{platforms(divide_platforms(entry.platforms)[i])}.svg" alt="plataforma" class="platform-img">
+          </div> <!-- Agregar más si necesitas múltiples círculos -->
+          {/each}
+        <div class="data-entry">
+          <img src="/images/Blob{parseInt(rating(entry.favRate))}.svg" alt="vacio" width = "{episodes(entry.episodes)}px" height =  "{episodes(entry.episodes)}px">
+        </div>
+
       {:else}
-        <img src="/images/Blob{rating(entry.favRate)}.svg" alt="vacio" width = "150px" height =  "150px">
+        <div class="data-entry">
+          <img src="/images/Blob{parseInt(rating(entry.favRate))}.svg" alt="vacio" width = "150px" height =  "150px">
+        </div>
       {/if}
-      </div>
       
-      {#each transformar(5) as {x, y}}
-        <div class="small-circle" style="transform: translate({x}px, {y}px);">
-          <img src="/images/minus.svg" alt=({x},{y}) class="minus">
-        </div> <!-- Agregar más si necesitas múltiples círculos -->
-      {/each}
+      
       <!--<div class="small-circle">
         <img src="/images/minus.svg" alt="minus" class="minus">
       </div>
@@ -122,7 +131,7 @@
   }
 
 
-  .minus{
+  .platform-img{
     /*position: relative; para centrar "manualmente"
     left: 20%;
     top: 10%;*/
@@ -132,7 +141,7 @@
   .small-circle {
   width: 40px;
   height: 40px;
-  background-color: red; /* Elige el color que prefieras */
+  background-color: black; /* Elige el color que prefieras */
   border-radius: 50%;
   position: absolute;
   display: flex;
@@ -160,6 +169,9 @@
     border-radius: 50%;
     margin-bottom: 50px;
     margin-right: 20px;
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
   }
 
   .header {
@@ -225,4 +237,17 @@
     text-align: center;
     margin-top: 5px;
   }
+  @-moz-keyframes spin { 
+    100% { -moz-transform: rotate(360deg); } 
+  }
+  @-webkit-keyframes spin { 
+    100% { -webkit-transform: rotate(360deg); } 
+  }
+  @keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(360deg); 
+        transform:rotate(360deg); 
+    } 
+  }
+
 </style>
