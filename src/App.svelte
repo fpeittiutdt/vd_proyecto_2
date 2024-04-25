@@ -27,7 +27,14 @@
       "Romance",
       "Ciencia Ficción",
     ])
-    .range(["rgb(0, 224, 255, 0.5)", "rgb(255, 245, 0, 0.5)", "rgb(255, 15, 15, 0.5)", "rgb(255, 15, 15, 0.5)", "rgb(255, 120, 209, 1)", "rgb(36, 255, 0, 0.5)"])
+    .range([
+      "rgb(0, 224, 255, 0.5)",
+      "rgb(255, 245, 0, 0.5)",
+      "rgb(255, 15, 15, 0.5)",
+      "rgb(255, 15, 15, 0.5)",
+      "rgb(255, 120, 209, 1)",
+      "rgb(36, 255, 0, 0.5)",
+    ])
     .unknown("rgb(128, 0, 255, 0.5)");
 
   // Plataformas
@@ -51,7 +58,7 @@
     for (let i = 0; i < splittedGenres.length; i++) {
       res.push(genreColor(splittedGenres[i]));
     }
-    res.sort((() => Math.random() - 0.5));
+    res.sort(() => Math.random() - 0.5);
     return [...new Set(res)];
   }
 
@@ -122,9 +129,21 @@
 
           {#if parseInt(rating(entry.favRate)) == 1}
             <div class="data-entry">
-              <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{blob_size}%" id="blobSvg">
+              <svg
+                viewBox="0 0 500 500"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="{blob_size}%"
+                id="blobSvg"
+              >
                 <defs>
-                  <linearGradient id="gradient{id}" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <linearGradient
+                    id="gradient{id}"
+                    x1="0%"
+                    y1="0%"
+                    x2="0%"
+                    y2="100%"
+                  >
                     {#each divide_genres(entry.genres) as genreType, i}
                       <stop
                         offset="{calculateOffset(
@@ -138,7 +157,11 @@
                   </linearGradient>
                 </defs>
                 <path id="blob1" fill="url(#gradient{id})">
-                  <animate attributeName="d" dur="{Math.abs(episodes(entry.episodes))}ms" repeatCount="indefinite" values= "
+                  <animate
+                    attributeName="d"
+                    dur="{Math.abs(episodes(entry.episodes))}ms"
+                    repeatCount="indefinite"
+                    values="
                   M394,270Q372,290,397,332.5Q422,375,396,395.5Q370,416,336.5,415Q303,414,276.5,400.5Q250,387,218.5,415Q187,443,170,413Q153,383,149,354.5Q145,326,91,322.5Q37,319,46,284.5Q55,250,81,227Q107,204,83.5,158Q60,112,115,126Q170,140,181.5,108Q193,76,221.5,87Q250,98,270.5,111.5Q291,125,332.5,102Q374,79,397,103Q420,127,436,155.5Q452,184,434,217Q416,250,394,270Z;
                   M471,287.5Q479,325,465,360.5Q451,396,412,408Q373,420,338.5,417.5Q304,415,277,421.5Q250,428,223,421.5Q196,415,172,402.5Q148,390,116,380.5Q84,371,51.5,348Q19,325,15.5,287.5Q12,250,52,224.5Q92,199,74.5,154.5Q57,110,111.5,122.5Q166,135,184,118Q202,101,226,76.5Q250,52,285.5,41Q321,30,341,63.5Q361,97,368,128Q375,159,424,168.5Q473,178,468,214Q463,250,471,287.5Z;
                   M393,271Q380,292,393.5,328Q407,364,394,397Q381,430,348,439.5Q315,449,282.5,429Q250,409,223.5,411Q197,413,183.5,386.5Q170,360,127,365.5Q84,371,59.5,345.5Q35,320,46,285Q57,250,77,225Q97,200,96,168.5Q95,137,117,117.5Q139,98,158,62.5Q177,27,213.5,75.5Q250,124,270,125.5Q290,127,322,117Q354,107,396,110.5Q438,114,417.5,158Q397,202,401.5,226Q406,250,393,271Z;
@@ -147,10 +170,17 @@
                   ></animate>
                 </path>
               </svg>
+              <p class="label-entry">{entry.fav}</p>
             </div>
           {:else if parseInt(rating(entry.favRate)) == 2}
             <div class="data-entry">
-              <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{blob_size}%" id="blobSvg">
+              <svg
+                viewBox="0 0 500 500"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="{blob_size}%"
+                id="blobSvg"
+              >
                 <defs>
                   <linearGradient
                     id="gradient{id}"
@@ -173,7 +203,11 @@
                   </linearGradient>
                 </defs>
                 <path id="blob2" fill="url(#gradient{id})">
-                  <animate attributeName="d" dur="{Math.abs(episodes(entry.episodes))}ms" repeatCount="indefinite" values="
+                  <animate
+                    attributeName="d"
+                    dur="{Math.abs(episodes(entry.episodes))}ms"
+                    repeatCount="indefinite"
+                    values="
                   M423,322.5Q395,395,322.5,438Q250,481,207,408.5Q164,336,89.5,293Q15,250,82,199.5Q149,149,199.5,81Q250,13,333.5,48Q417,83,434,166.5Q451,250,423,322.5Z;
                   M376,286Q322,322,286,381.5Q250,441,212.5,383Q175,325,92.5,287.5Q10,250,50,170Q90,90,170,90Q250,90,306,114Q362,138,396,194Q430,250,376,286Z;
                   M379,327.5Q405,405,327.5,378.5Q250,352,207.5,343.5Q165,335,149.5,292.5Q134,250,109,167Q84,84,167,110.5Q250,137,331,112.5Q412,88,382.5,169Q353,250,379,327.5Z;
@@ -184,12 +218,25 @@
                   </animate>
                 </path>
               </svg>
+              <p class="label-entry">{entry.fav}</p>
             </div>
           {:else if parseInt(rating(entry.favRate)) == 3}
             <div class="data-entry">
-              <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{blob_size}%" id="blobSvg">
+              <svg
+                viewBox="0 0 500 500"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="{blob_size}%"
+                id="blobSvg"
+              >
                 <defs>
-                  <linearGradient id="gradient{id}" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <linearGradient
+                    id="gradient{id}"
+                    x1="0%"
+                    y1="0%"
+                    x2="0%"
+                    y2="100%"
+                  >
                     {#each divide_genres(entry.genres) as genreType, i}
                       <stop
                         offset="{calculateOffset(
@@ -203,7 +250,11 @@
                   </linearGradient>
                 </defs>
                 <path id="blob3" fill="url(#gradient{id})">
-                  <animate attributeName="d" dur="{Math.abs(episodes(entry.episodes))}ms" repeatCount="indefinite" values="
+                  <animate
+                    attributeName="d"
+                    dur="{Math.abs(episodes(entry.episodes))}ms"
+                    repeatCount="indefinite"
+                    values="
                   M430.5,301Q478,352,418,361Q358,370,333,399.5Q308,429,266.5,457.5Q225,486,180.5,467Q136,448,140,387.5Q144,327,124.5,304Q105,281,87,246Q69,211,92.5,182Q116,153,132.5,113.5Q149,74,189,61Q229,48,272.5,46.5Q316,45,348.5,75Q381,105,398,141Q415,177,399,213.5Q383,250,430.5,301Z;
                   M433,285.5Q409,321,399.5,363Q390,405,357,442Q324,479,276,467.5Q228,456,201,419Q174,382,134,373Q94,364,87,325Q80,286,89,252Q98,218,84,168.5Q70,119,118,111.5Q166,104,200,102.5Q234,101,271,86.5Q308,72,357,74Q406,76,423.5,120.5Q441,165,449,207.5Q457,250,433,285.5Z;
                   M417.69454,292.9459Q442.09289,335.8918,416.87377,371.68688Q391.65464,407.48197,352.86339,427.52186Q314.07213,447.56176,273.10437,434.82077Q232.13661,422.07979,205.96393,396.6623Q179.79126,371.24481,158.40601,351.48962Q137.02076,331.73443,100.65082,310.52186Q64.28088,289.30929,90.65464,255.72295Q117.02841,222.13661,119.98852,189.59672Q122.94862,157.05682,136.20109,116.46393Q149.45356,75.87104,192.5541,96.29508Q235.65464,116.71912,275.96393,81.53607Q316.27322,46.35301,365.27322,57.03989Q414.27322,67.72678,424.74098,117.60437Q435.20874,167.48197,414.25247,208.74098Q393.29619,250,417.69454,292.9459Z;
@@ -213,15 +264,25 @@
                   ></animate>
                 </path>
               </svg>
+              <p class="label-entry">{entry.fav}</p>
             </div>
           {:else if parseInt(rating(entry.favRate)) == 4}
             <div class="data-entry">
-              <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{blob_size}%" id="blobSvg">
+              <svg
+                viewBox="0 0 500 500"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="{blob_size}%"
+                id="blobSvg"
+              >
                 <defs>
-                  <filter id="filter{id}">
-                    <feGaussianBlur stdDeviation="8"></feGaussianBlur>
-                  </filter>
-                  <linearGradient id="gradient{id}" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <linearGradient
+                    id="gradient{id}"
+                    x1="0%"
+                    y1="0%"
+                    x2="0%"
+                    y2="100%"
+                  >
                     {#each divide_genres(entry.genres) as genreType, i}
                       <stop
                         offset="{calculateOffset(
@@ -234,22 +295,27 @@
                     {/each}
                   </linearGradient>
                 </defs>
-                <path id="blob4" fill="url(#gradient{id})" filter="url(#filter{id})">
-                  <animate attributeName="d" dur="{Math.abs(episodes(entry.episodes))}ms" repeatCount="indefinite" values="
+                <path
+                  id="blob4"
+                  fill="url(#gradient{id})"
+                  filter="url(#filter{id})"
+                >
+                  <animate
+                    attributeName="d"
+                    dur="{Math.abs(episodes(entry.episodes))}ms"
+                    repeatCount="indefinite"
+                    values="
                   M445.5,292.5Q397,335,376.5,384.5Q356,434,303,391Q250,348,196.5,392Q143,436,96,401Q49,366,108,308Q167,250,165,225Q163,200,164.5,152Q166,104,208,138Q250,172,291,140Q332,108,335,153.5Q338,199,416,224.5Q494,250,445.5,292.5Z;
                   M450.5,303Q434,356,364,341.5Q294,327,272,369Q250,411,199.5,418Q149,425,106.5,391Q64,357,103.5,303.5Q143,250,136,215Q129,180,150,146.5Q171,113,210.5,115.5Q250,118,310.5,79Q371,40,388,100.5Q405,161,436,205.5Q467,250,450.5,303Z;
                   M402.17929,286.8931Q377.81312,323.78619,354.26094,356.85775Q330.70876,389.9293,290.35438,388.10354Q250,386.27777,194.25589,415.00337Q138.51178,443.72896,97.5101,402.61195Q56.50842,361.49495,48.43686,305.74748Q40.36531,250,69.32491,206.0101Q98.28451,162.0202,142.13384,150.62037Q185.98317,139.22054,217.99158,96.39646Q250,53.57238,307.50337,52.0303Q365.00673,50.48822,383.50505,106.49327Q402.00337,162.49832,414.27441,206.24916Q426.54545,250,402.17929,286.8931Z;
                   M467.62404,309.41016Q455.89564,368.82031,382.0698,359.89357Q308.24396,350.96683,279.12198,373.43573Q250,395.90463,225.67622,364.49897Q201.35245,333.09331,154.53317,332.77506Q107.71389,332.45681,120.04975,291.2284Q132.38561,250,109.6662,203Q86.94679,156,105.79717,94.59987Q124.64755,33.19973,187.32378,78.94126Q250,124.68278,298.6009,103.55977Q347.2018,82.43676,331.44575,147.4689Q315.68971,212.50103,397.52108,231.25052Q479.35245,250,467.62404,309.41016Z;
                   M445.5,292.5Q397,335,376.5,384.5Q356,434,303,391Q250,348,196.5,392Q143,436,96,401Q49,366,108,308Q167,250,165,225Q163,200,164.5,152Q166,104,208,138Q250,172,291,140Q332,108,335,153.5Q338,199,416,224.5Q494,250,445.5,292.5Z;
-                  ">
+                  "
+                  >
                   </animate>
                 </path>
               </svg>
-              <p class="label-entry">
-                <span class="span-entry">
-                  
-                </span>
-              </p>
+              <p class="label-entry">{entry.fav}</p>
             </div>
           {/if}
         {:else}
@@ -305,7 +371,7 @@
 }
 /* Añadir más según sea necesario, ajustando los grados de rotación */
 
-  .data-entry{
+  .data-entry {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -358,6 +424,20 @@
     gap: 30px;
     margin-bottom: 100px;
   }
+
+  .label-entry {
+    opacity: 0;
+    position: absolute;
+  }
+
+  .data-entry:hover svg {
+    opacity: 0;
+  }
+
+  .data-entry:hover .label-entry {
+    opacity: 1;
+  }
+
   @-moz-keyframes spin {
     100% {
       -moz-transform: rotate(360deg);
