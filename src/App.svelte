@@ -388,6 +388,7 @@
     border-radius: 50%;
     margin-bottom: 50px;
     margin-right: 20px;
+    animation: float 10s ease-in-out infinite;
   }
 
   .header {
@@ -452,6 +453,18 @@
     100% {
       -webkit-transform: rotate(360deg);
       transform: rotate(360deg);
+    }
+  }
+
+  @keyframes float {
+    0% {
+      transform: translatey(0px);
+    }
+    50% {
+      transform: translatey(-20px);
+    }
+    100% {
+      transform: translatey(0px);
     }
   }
 </style>
