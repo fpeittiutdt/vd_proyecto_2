@@ -14,7 +14,7 @@
     .range([true, false]);
 
   // Cantidad promedio de capítulos vistos
-  let episodes = d3.scaleLinear().range([-5000, -1000]);
+  let episodes = d3.scaleLinear().range([-10000, -1000]);
 
   // Géneros favoritos
   let genreColor = d3
@@ -342,7 +342,10 @@
 </main>
 
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
   :global(body) {
+    font-family: "Poppins", sans-serif;
   }
 
   .platform-img {
@@ -429,6 +432,10 @@
   .label-entry {
     opacity: 0;
     position: absolute;
+    overflow: auto;
+    width: 80%;
+    text-align: center;
+    justify-content: center;
   }
 
   .data-entry:hover svg {
