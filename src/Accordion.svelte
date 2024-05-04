@@ -26,9 +26,7 @@
 
   div.header {
     display: flex;
-    width: 50%;
-    background-color: black;
-    margin: 0 auto;
+    width: 100%;
   }
 
   div.header .text {
@@ -41,5 +39,6 @@
   div.details {
     background-color: #cecece;
     padding: 1rem;
+    border-radius: 20px;
   }
 </style>
