@@ -1,2 +1,3 @@
 # vd_proyecto_2
-Visualización datos de la clase
+
+Visualización de datos de la clase, orientado a los hábitos de ver series.
