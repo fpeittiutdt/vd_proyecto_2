@@ -99,7 +99,7 @@
     return res;
   }
 
-  function divide_platforms(s, separador) {
+  function divide_platforms(s) {
     let res = [];
     let splittedPlatforms = s.split(", ");
     for (let i = 0; i < splittedPlatforms.length; i++) {
@@ -173,13 +173,13 @@
     {#each series as entry, id}
       <div class="circle-entry">
           {#if watch_series(entry.watch)}
-            {#each transformar(divide_platforms(entry.platforms, ", ").length, 100) as { x, y }, i}
+            {#each transformar(divide_platforms(entry.platforms).length, 100) as { x, y }, i}
               <div
                 class="small-circle"
                 style="transform: translate({x}px, {y}px);"
               >
                 <img
-                  src="/images/{divide_platforms(entry.platforms, ", ")[i]}.svg"
+                  src="/images/{divide_platforms(entry.platforms)[i]}.svg"
                   alt="plataforma"
                   class="platform-img"
                 />
