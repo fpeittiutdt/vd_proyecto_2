@@ -48,8 +48,12 @@
   let rating = d3.scaleLinear().range([1, 4]).unknown(0);
 
   function divide_platforms(s) {
-    let res = s.split(", ");
-    return res;
+    let res = [];
+    let splittedPlatforms = s.split(", ");
+    for (let i = 0; i < splittedPlatforms.length; i++) {
+      res.push(platforms(splittedPlatforms[i]));
+    }
+    return [...new Set(res)];
   }
 
   function divide_genres(s) {
@@ -117,9 +121,7 @@
               style="transform: translate({x}px, {y}px);"
             >
               <img
-                src="/images/{platforms(
-                  divide_platforms(entry.platforms)[i]
-                )}.svg"
+                src="/images/{divide_platforms(entry.platforms)[i]}.svg"
                 alt="plataforma"
                 class="platform-img"
               />
