@@ -59,7 +59,7 @@
       "rgb(255, 245, 0, 0.5)",
       "rgb(255, 15, 15, 0.5)",
       "rgb(255, 15, 15, 0.5)",
-      "rgb(255, 120, 209, 1)",
+      "rgb(255, 120, 209, 0.8)",
       "rgb(36, 255, 0, 0.5)",
     ])
     .unknown("rgb(128, 0, 255, 0.5)");
@@ -187,13 +187,7 @@
   </div>
 
   <Accordion open={true}>
-    <button
-      slot="head"
-      style="
-    background-color: black;
-    margin: 0 auto; width:50%; border-color: grey; border-width:5px"
-      >Lenguaje visual</button
-    >
+    <button slot="head" class="accordion-button">Lenguaje visual</button>
     <div slot="details">
       <p>
         A continuación se detallan las distintas variables que entran en juego
@@ -1287,9 +1281,9 @@
   }
 
   .circle-entry {
+    border: 1.5px black solid;
     position: relative;
     height: 200px;
-    border: 1.5px black solid;
     width: 200px;
     display: flex;
     justify-content: center;
@@ -1377,5 +1371,16 @@
   .quality {
     font-weight: 700;
     font-size: large;
+  }
+
+  .accordion-button {
+    text-align: center;
+    background-color: white;
+    width: 100%;
+    border-color: black;
+    border-width: 7px;
+    color: black;
+    font-weight: bold;
+    border-radius: 15px;
   }
 </style>
