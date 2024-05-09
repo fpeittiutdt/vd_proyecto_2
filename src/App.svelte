@@ -177,20 +177,21 @@
     <img src="/images/Movie.svg" width="100" alt="movie" />
     <h3 class="headline">
       <b>Gustos de series</b>
-      Serie favorita, generos y plataformas
+      <p class="bajada">Explorando los gustos de la clase a través de datos</p>
     </h3>
-    <p class="bajada">Explorando los gustos a traves de datos</p>
+
     <div class="switch-container">
       <input id="switch" type="checkbox" />
       <label for="switch" class="label-switch"></label>
     </div>
   </div>
 
-  <Accordion open={true}>
+  <Accordion open={false}>
     <button slot="head" class="accordion-button">Lenguaje visual</button>
-    <div slot="details">
+    <div slot="details" style="font-size: large;">
       <p>
-        A continuación se detallan las distintas variables que entran en juego
+        A continuación se detallan las distintas variables que entran en juego<br
+        />
         en la generación de cada observación para una persona cualquiera.
       </p>
       <p class="quality">Forma del núcleo</p>
@@ -241,8 +242,9 @@
       </div>
       <div>
         <p>
-          Si mira series, la forma del núcleo dependerá del rating de su serie
-          favorita en <a href="https://www.imdb.com/?ref_=nv_home">IMDb</a>.
+          Si mira series, la forma del núcleo dependerá
+          <br />del rating de su serie favorita en
+          <a href="https://www.imdb.com/?ref_=nv_home">IMDb</a>.
         </p>
       </div>
       <div
@@ -363,7 +365,7 @@
       </div>
       <p class="quality">Colores</p>
       <p>
-        Se arma una combinación para el color del núcleo según sus géneros
+        Se arma una combinación para el color del núcleo<br /> según sus géneros
         favoritos.
       </p>
       <div
@@ -387,7 +389,7 @@
 
       <p class="quality">Orbitales</p>
       <p>
-        Cada orbital indica que la persona usa alguna/s las siguientes
+        Cada orbital indica que la persona usa alguna/s <br />de las siguientes
         plataformas para ver series.
       </p>
       <div style="display: flex; justify-content: space-evenly;">
@@ -408,8 +410,8 @@
       </div>
       <p class="quality">Velocidad de ondulación del núcleo</p>
       <p>
-        En función de cuántos episodios ve a la semana, el núcleo cambia de
-        forma más rápidamente, por ejemplo:
+        En función de cuántos episodios ve a la semana, <br />el núcleo cambia
+        de forma más rápidamente, por ejemplo:
       </p>
       <div style="display:flex; justify-content: space-evenly;">
         <div
@@ -499,11 +501,10 @@
       </div>
       <p class="quality">Ejemplo</p>
       <p>
-        Para una persona que ve 11 episodios a la semana, cuyos géneros
-        favoritos son drama, comedia y misterio, que usa las plataformas Apple
-        TV, Disney+, Star+ y Amazon Prime, y cuya serie favorita es "Jamie's
-        Quick & Easy Food" (rating de IMDb: 8.2), su visualización es la que
-        sigue:
+        Para una persona que mira 11 episodios a la semana, <br />que le gustan
+        los géneros de drama, comedia y misterio, <br />que usa las plataformas
+        Apple TV, Disney+, Star+ y Amazon Prime,<br /> y cuya serie favorita es "Jamie's
+        Quick & Easy Food" (rating de IMDb: 8.2):
       </p>
       <div style="display: flex; justify-content:space-evenly;">
         <div class="circle-entry" style="animation:none; margin-top:20px;">
@@ -574,8 +575,8 @@
 
   <div class="container1">
     {#each series as entry, id}
-      <div class="circle-entry">
-        {#if watch_series(entry.watch)}
+      {#if watch_series(entry.watch)}
+        <div class="circle-entry">
           {#each transformar(divide_platforms(entry.platforms).length, 100) as { x, y }, i}
             <div
               class="small-circle"
@@ -785,7 +786,9 @@
               </p>
             </div>
           {/if}
-        {:else}
+        </div>
+      {:else}
+        <div class="circle-entry-no">
           <div class="data-entry">
             <svg
               width="200"
@@ -829,16 +832,16 @@
 
             <p class="label-entry">No ve series</p>
           </div>
-        {/if}
+        </div>
+      {/if}
 
-        <!--<div class="small-circle">
+      <!--<div class="small-circle">
           <img src="/images/minus.svg" alt="minus" class="minus">
         </div>
         
         <div class="small-circle">
           <img src="/images/minus.svg" alt="minus" class="minus">
         </div> -->
-      </div>
     {/each}
   </div>
 
@@ -1290,7 +1293,17 @@
     align-items: center;
     border-radius: 50%;
     margin-bottom: 50px;
-    margin-right: 20px;
+    animation: float 10s ease-in-out infinite;
+  }
+
+  .circle-entry-no {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
     animation: float 10s ease-in-out infinite;
   }
 
@@ -1322,10 +1335,12 @@
     justify-content: center;
     align-items: end;
     margin: auto;
+    width: 90%;
     flex-wrap: wrap;
-    max-width: 1000px;
-    gap: 30px;
+    gap: 50px;
     margin-bottom: 100px;
+
+    justify-content: space-evenly;
   }
 
   .container2 {
@@ -1370,7 +1385,7 @@
 
   .quality {
     font-weight: 700;
-    font-size: large;
+    font-size: x-large;
   }
 
   .accordion-button {
