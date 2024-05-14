@@ -196,18 +196,18 @@
     let res = {};
     for (let i = 0; i < list_data.length; i++) {
       if (list_data[i].watch == "Si") {
-        let month_of_data_i = Math.ceil(list_data[i].birthDate.split("/")[1]/time_interval);
+        let month_of_data_i = Math.ceil(
+          list_data[i].birthDate.split("/")[1] / time_interval
+        );
         if (!(month_of_data_i in res)) {
           res[month_of_data_i] = [list_data[i]];
         } else {
           res[month_of_data_i].push(list_data[i]);
         }
-      }
-      else{
-        if(!(0 in res)){
+      } else {
+        if (!(0 in res)) {
           res[0] = [list_data[i]];
-        }
-        else{
+        } else {
           res[0].push(list_data[i]);
         }
       }
@@ -273,7 +273,7 @@
     </h3>
 
     <div class="switch-container">
-      <input id="switch" type="checkbox"/>
+      <input id="switch" type="checkbox" />
       <label for="switch" class="label-switch"></label>
     </div>
   </div>
@@ -669,7 +669,9 @@
 
   <div class="container1">
     {#each Object.entries(data_by_semester) as [month, list_data]}
-    <p style="font-weight: bold; font-size: 30px">{month != 0 ? month+" ° cuatrimestre del año" : "No ve series"}</p>
+      <p style="font-weight: bold; font-size: 30px">
+        {month != 0 ? month + " ° cuatrimestre del año" : "No ve series"}
+      </p>
       <div style="display: flex; align-items: center; gap: 50px;">
         {#each list_data as entry, id}
         {#if watch_series(entry.watch)}
@@ -886,7 +888,7 @@
           </div>
         {:else}
           <div class="circle-entry-no">
-            <div class="data-entry">
+              <div class="data-entry-0">
               <svg
                 width="200"
                 height="200"
@@ -945,14 +947,13 @@
   <div class="container2">
     <div class="big-circle-container">
       {#each Object.keys(data_by_month) as month_i, i}
-        <div
-          class="big-circle"
-        >
+        <div class="big-circle">
           {#each data_by_month[month_i] as entry, id}
             <div class="circle-container">
               <div
                 class="circle-entry"
-                style="transform: translate({circles_entry2[month_i][id].x}px, {circles_entry2[month_i][id].y}px); animation: none;"
+                style="transform: translate({circles_entry2[month_i][id]
+                  .x}px, {circles_entry2[month_i][id].y}px); animation: none;"
               >
                 {#if watch_series(entry.watch)}
                   {#each transformar(divide_platforms(entry.platforms).length, 100) as { x, y }, i}
@@ -1228,13 +1229,12 @@
 </main>
 
 <style>
-
   @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap");
 
   :global(body) {
     font-family: "Poppins", sans-serif;
-    background-image: linear-gradient(#FF2E00, #3919FB);
+    background-image: linear-gradient(#ff2e00, #3919fb);
   }
 
   .colores-lenguaje {
