@@ -14,6 +14,8 @@
 
   let data_by_month = {};
 
+  let dataByZodiac = {};
+
   let genreList = [
     "Drama",
     "Comedia",
@@ -98,14 +100,19 @@
 
       series = data;
 
-      series.sort((valor1, valor2) =>{
-        if(valor1.fav < valor2.fav) { return -1; }
-        if(valor1.fav > valor2.fav) { return 1; }
+      series.sort((valor1, valor2) => {
+        if (valor1.fav < valor2.fav) {
+          return -1;
+        }
+        if (valor1.fav > valor2.fav) {
+          return 1;
+        }
         return 0;
       });
       
       console.log(series);
 
+      dataByZodiac = fillDataByZodiac(series);
       data_by_semester = fill_data_by_time_interval_dict(series, 3);
       data_by_month = fill_data_by_time_interval_dict(series, 1);
       fill_circles_entry(circles_entry, data_by_semester);
@@ -115,11 +122,74 @@
 
   function fill_circles_entry(a_llenar, data) {
     for (var clave in data) {
-      a_llenar[clave] = transformar(
-        data[clave].length,
-        initial_size / 2
-      );
+      a_llenar[clave] = transformar(data[clave].length, initial_size / 2);
     }
+  }
+
+  function mapZodiac(date) {
+    let splittedDate = date.split("/");
+    let zodiac = "";
+    if (splittedDate[1] == "12") {
+      if (Number(splittedDate[0]) < 22) zodiac = "Sagitario";
+      else zodiac = "Acuario";
+    } else if (splittedDate[1] == "01") {
+      if (Number(splittedDate[0]) < 20) zodiac = "Capricornio";
+      else zodiac = "Acuario";
+    } else if (splittedDate[1] == "02") {
+      if (Number(splittedDate[0]) < 19) zodiac = "Acuario";
+      else zodiac = "Piscis";
+    } else if (splittedDate[1] == "03") {
+      if (Number(splittedDate[0]) < 21) zodiac = "Piscis";
+      else zodiac = "Aries";
+    } else if (splittedDate[1] == "04") {
+      if (Number(splittedDate[0]) < 20) zodiac = "Aries";
+      else zodiac = "Tauro";
+    } else if (splittedDate[1] == "05") {
+      if (Number(splittedDate[0]) < 21) zodiac = "Tauro";
+      else zodiac = "Géminis";
+    } else if (splittedDate[1] == "06") {
+      if (Number(splittedDate[0]) < 21) zodiac = "Géminis";
+      else zodiac = "Cáncer";
+    } else if (splittedDate[1] == "07") {
+      if (Number(splittedDate[0]) < 23) zodiac = "Cáncer";
+      else zodiac = "Leo";
+    } else if (splittedDate[1] == "08") {
+      if (Number(splittedDate[0]) < 23) zodiac = "Leo";
+      else zodiac = "Virgo";
+    } else if (splittedDate[1] == "09") {
+      if (Number(splittedDate[0]) < 23) zodiac = "Virgo";
+      else zodiac = "Libra";
+    } else if (splittedDate[1] == "10") {
+      if (Number(splittedDate[0]) < 23) zodiac = "Libra";
+      else zodiac = "Escorpio";
+    } else if (splittedDate[1] == "11") {
+      if (Number(splittedDate[0]) < 22) zodiac = "Escorpio";
+      else zodiac = "Sagitario";
+    }
+
+    return zodiac;
+  }
+
+  function fillDataByZodiac(listData) {
+    let res = {};
+    for (let i = 0; i < listData.length; i++) {
+      if (listData[i].watch == "Si") {
+        let zodiac = mapZodiac(listData[i].birthDate);
+
+        if (!(zodiac in res)) {
+          res[zodiac] = [listData[i]];
+        } else {
+          res[zodiac].push(listData[i]);
+        }
+      } else {
+        if (!(0 in res)) {
+          res[0] = [listData[i]];
+        } else {
+          res[0].push(listData[i]);
+        }
+      }
+    }
+    return res;
   }
 
   function fill_data_by_time_interval_dict(list_data, time_interval) {
@@ -184,7 +254,6 @@
         container1.style.display = "none";
         container2.style.display = "flex";
         console.log(circles_entry);
-
       } else {
         container1.style.display = "flex";
         container2.style.display = "none";
@@ -200,7 +269,7 @@
     <img src="/images/Movie.svg" width="100" alt="movie" />
     <h3 class="headline">
       <b>Gustos de series</b>
-      <p class="bajada">Explorando los gustos de la clase a través de datos</p>
+      <p class="bajada">Explorando la clase a través de datos</p>
     </h3>
 
     <div class="switch-container">
@@ -529,7 +598,9 @@
         Apple TV, Disney+, Star+ y Amazon Prime,<br /> y cuya serie favorita es "Jamie's
         Quick & Easy Food" (rating de IMDb: 8.2):
       </p>
-      <div style="display: flex; justify-content:space-evenly; margin-bottom: 50px;">
+      <div
+        style="display: flex; justify-content:space-evenly; margin-bottom: 50px;"
+      >
         <div class="circle-entry" style="animation:none; margin-top:20px;">
           {#each transformar(divide_platforms("Disney+, Star+, Amazon Prime, Apple TV").length, 100) as { x, y }, i}
             <div
@@ -855,8 +926,6 @@
                   </filter>
                 </defs>
               </svg>
-
-              <p class="label-entry">No ve series</p>
             </div>
           </div>
         {/if}
@@ -871,10 +940,8 @@
         {/each}
       </div>
     {/each}
-    
   </div>
 
-  <!-- Contenedor de las entidades -->
   <div class="container2">
     <div class="big-circle-container">
       {#each Object.keys(data_by_month) as month_i, i}
@@ -1098,7 +1165,7 @@
                     </div>
                   {/if}
                 {:else}
-                  <div class="data-entry">
+                  <div class="data-entry-0">
                     <svg
                       width="200"
                       height="200"
@@ -1141,7 +1208,6 @@
                         </filter>
                       </defs>
                     </svg>
-                    <p class="label-entry">No ve series</p>
                   </div>
                 {/if}
 
@@ -1195,7 +1261,6 @@
     position: relative;
     top: 150px;
     gap: 250px;
-
   }
 
   .label-switch::after {
@@ -1271,6 +1336,12 @@
   }
 
   .data-entry {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .data-entry-0 {
     display: flex;
     align-items: center;
     justify-content: center;
