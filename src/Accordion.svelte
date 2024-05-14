@@ -6,7 +6,12 @@
 
 <div class="accordion">
   <div class="header">
-    <div class="text" on:click={handleClick}>
+    <div
+      class="text"
+      on:click={handleClick}
+      style="
+    padding: 0 10px;"
+    >
       <slot name="head"></slot>
     </div>
   </div>
@@ -20,19 +25,18 @@
 
 <style>
   div.accordion {
-    margin: 1rem 0;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
+    text-align: center;
   }
 
   div.header {
-    display: flex;
-    width: 100%;
+    display: inline-block;
+    width: 30%;
   }
 
   div.header .text {
-    flex: 1;
-    margin: 10px;
     color: white;
+    width: auto;
     text-align: center;
   }
 
