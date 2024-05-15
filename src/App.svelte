@@ -1035,7 +1035,7 @@
                 {/each}
 
                 {#if parseInt(rating(entry.favRate)) == 1}
-                  <div class="data-entry">
+                  <div class="data-entry-0">
                     <svg
                       viewBox="0 0 500 500"
                       xmlns="http://www.w3.org/2000/svg"
@@ -1077,12 +1077,9 @@
                         ></animate>
                       </path>
                     </svg>
-                    <p class="label-entry">
-                      {entry.fav}
-                    </p>
                   </div>
                 {:else if parseInt(rating(entry.favRate)) == 2}
-                  <div class="data-entry">
+                  <div class="-0">
                     <svg
                       viewBox="0 0 500 500"
                       xmlns="http://www.w3.org/2000/svg"
@@ -1127,12 +1124,9 @@
                         </animate>
                       </path>
                     </svg>
-                    <p class="label-entry">
-                      {entry.fav}
-                    </p>
                   </div>
                 {:else if parseInt(rating(entry.favRate)) == 3}
-                  <div class="data-entry">
+                  <div class="data-entry-0">
                     <svg
                       viewBox="0 0 500 500"
                       xmlns="http://www.w3.org/2000/svg"
@@ -1175,12 +1169,9 @@
                         ></animate>
                       </path>
                     </svg>
-                    <p class="label-entry">
-                      {entry.fav}
-                    </p>
                   </div>
                 {:else if parseInt(rating(entry.favRate)) == 4}
-                  <div class="data-entry">
+                  <div class="data-entry-0">
                     <svg
                       viewBox="0 0 500 500"
                       xmlns="http://www.w3.org/2000/svg"
@@ -1224,9 +1215,6 @@
                         </animate>
                       </path>
                     </svg>
-                    <p class="label-entry">
-                      {entry.fav}
-                    </p>
                   </div>
                 {/if}
               {:else}
@@ -1275,14 +1263,6 @@
                   </svg>
                 </div>
               {/if}
-
-              <!--<div class="small-circle">
-          <img src="/images/minus.svg" alt="minus" class="minus">
-        </div>
-        
-        <div class="small-circle">
-          <img src="/images/minus.svg" alt="minus" class="minus">
-        </div> -->
             </div>
           </div>
         {/each}
@@ -1387,14 +1367,6 @@
     justify-content: center;
     /* Ajustar top y left para posicionar correctamente */
   }
-
-  /*.small-circle:nth-child(2) {
-  transform: translate(-50%, -50%) rotate(-90deg) translate(100px) rotate(90deg);
-}
-.small-circle:nth-child(3) {
-  transform: translate(-200%, -100%) rotate(90deg) translate(100px) rotate(-90deg);
-}
-/* Añadir más según sea necesario, ajustando los grados de rotación */
 
   #blob0 {
     transform-origin: center;
