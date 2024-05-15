@@ -8,14 +8,11 @@
 
   let circles_entry = {};
 
-  let circles_entry2 = {};
-
   let data_by_semester = {};
-
-  let data_by_month = [];
 
   let dataByZodiac = [];
 
+  /* Definimos las constantes */
   let valoresZodiac = [
     "Sagitario",
     "Piscis",
@@ -50,8 +47,6 @@
   ];
 
   let blob_size = 80;
-
-  let diference_from_each_circle = 50;
 
   let circle_entry_size = 200;
 
@@ -97,6 +92,7 @@
   // Rating de la serie favorita
   let rating = d3.scaleLinear().range([1, 4]).unknown(0);
 
+  // Función para transformar la lista de géneros en la lista del escalado
   function divide_genres(s) {
     let res = [];
     let splittedGenres = s.split(", ");
@@ -118,31 +114,36 @@
       series = data;
 
       series.sort((valor1, valor2) => {
-        if (valor1.fav < valor2.fav) {
-          return -1;
+        console.log("a".localeCompare("b"));
+        if (valor1.fav == null || valor2.fav == null) {
+          return 0;
         }
-        if (valor1.fav > valor2.fav) {
-          return 1;
-        }
-        return 0;
+        return valor1.fav.localeCompare(valor2.fav);
       });
 
-      console.log(series);
-
+      // Datos ordenados para su uso particular
       dataByZodiac = fillDataByZodiac(series, null);
       data_by_semester = fill_data_by_time_interval_dict(series, 3);
-      data_by_month = fill_data_month(series, 2);
-      fill_circles_entry(circles_entry, data_by_semester);
-      //fill_circles_entry(circles_entry2, data_by_month);
+      for (let key in data_by_semester) {
+        data_by_semester[key].sort((valor1, valor2) => {
+          return compareFavs(valor1.fav, valor2.fav);
+        });
+      }
     });
   });
 
-  function fill_circles_entry(a_llenar, data) {
-    for (var clave in data) {
-      a_llenar[clave] = transformar(data[clave].length, initial_size / 2);
+  // Función para comparar dos strings con caracteres especiales
+  function compareFavs(fav1, fav2) {
+    if (fav1 == null) {
+      return -1;
+    } else if (fav2 == null) {
+      return 1;
+    } else {
+      return fav1.localeCompare(fav2);
     }
   }
 
+  // Función para mapear el zodíaco en función a la fecha de nacimiento
   function mapZodiac(date) {
     let splittedDate = date.split("/");
     let zodiac = "";
@@ -187,13 +188,13 @@
     return zodiac;
   }
 
+  // Función para obtener una sublista en función a un zodíaco
   function fillDataByZodiac(listData, filtro) {
     let res = [];
     for (let i = 0; i < listData.length; i++) {
       if (listData[i].watch == "Si") {
         let zodiac = mapZodiac(listData[i].birthDate);
         if (filtro != null) {
-          console.log(zodiac == "Géminis");
           if (zodiac === filtro) {
             res.push(listData[i]);
           }
@@ -205,19 +206,7 @@
     return res;
   }
 
-  function fill_data_month(list_data, value_month) {
-    let res = [];
-    for (let i = 0; i < list_data.length; i++) {
-      if (list_data[i].watch == "Si") {
-        let cumple = list_data[i].birthDate.split("/")[1];
-        if (cumple == value_month) {
-          res.push(list_data[i]);
-        }
-      }
-    }
-    return res;
-  }
-
+  // Función para obtener una sublista en función a un intervalo de tiempo (mes de nacimiento)
   function fill_data_by_time_interval_dict(list_data, time_interval) {
     let res = {};
     for (let i = 0; i < list_data.length; i++) {
@@ -241,6 +230,7 @@
     return res;
   }
 
+  // Función para obtener la lista de escalado de las plataformas
   function divide_platforms(s) {
     let res = [];
     let splittedPlatforms = s.split(", ");
@@ -264,6 +254,7 @@
     return smallCircles;
   }
 
+  // Función para distribuir el gradiente linear
   function calculateOffset(genreLength, index) {
     if (index == 0) {
       return 0;
@@ -273,8 +264,9 @@
 
   let ultimo_id = null;
 
+  // Función para manejar los filtros de la versión dinámica
   function changeFilter(filtro, id) {
-    // Obtener todos los botones
+    
     if (ultimo_id != null) {
       let boton_ultimo = document.getElementById("activado");
       boton_ultimo.id = ultimo_id;
@@ -291,6 +283,7 @@
     }
   }
 
+  // Función para manejar el switch entre estática/dinámica
   document.addEventListener("DOMContentLoaded", function () {
     var switch_button = document.getElementById("switch");
     var switch_text = document.getElementById("texto-switch");
@@ -300,7 +293,7 @@
       if (switch_button.checked) {
         container1.style.display = "none";
         container2.style.display = "flex";
-        valor = "Dinamico";
+        valor = "Dinámico";
         switch_text.style.left = "17px";
         switch_text.style.removeProperty("right");
         switch_button.style.backgroundColor = "rgb(0, 224, 255, 1)";
@@ -308,7 +301,7 @@
       } else {
         container1.style.display = "flex";
         container2.style.display = "none";
-        valor = "Estatico";
+        valor = "Estático";
         switch_text.style.right = "35px";
         switch_text.style.removeProperty("left");
         switch_button.style.backgroundColor = "rgb(0, 224, 255, 0.5)";
@@ -318,11 +311,12 @@
     switch_button.addEventListener("click", changeMode);
   });
 
-  let valor = "Estatico";
+  let valor = "Estático";
 
 </script>
 
 <main>
+  <!-- Título principal-->
   <div class="header">
     <img src="/images/Movie.svg" width="100" alt="movie" />
     <h3 class="headline">
@@ -338,6 +332,7 @@
     </div>
   </div>
 
+  <!-- Lenguaje visual-->
   <Accordion open={false}>
     <button slot="head" class="accordion-button">Lenguaje visual</button>
     <div slot="details" style="font-size: x-large;">
@@ -362,7 +357,7 @@
           <g filter="url(#filter0_f_87_1461)">
             <path
               id="blob0"
-              fill="#606060"
+              fill="black"
               d="M334.766 210.456C472.274 141.598 639.567 197.25 708.425 334.758C777.283 472.267 721.631 639.56 584.123 708.418C446.614 777.276 279.321 721.624 210.463 584.115C141.605 446.607 197.257 279.314 334.766 210.456Z"
             >
             </path>
@@ -675,7 +670,6 @@
                 class="platform-img"
               />
             </div>
-            <!-- Agregar más si necesitas múltiples círculos -->
           {/each}
           <svg
             viewBox="0 0 500 500"
@@ -727,6 +721,7 @@
     </div>
   </Accordion>
 
+  <!-- Versión estática -->
   <div class="container1">
     {#each Object.entries(data_by_semester) as [month, list_data]}
       <p style="font-weight: bold; font-size: 30px">
@@ -749,7 +744,6 @@
                     class="platform-img"
                   />
                 </div>
-                <!-- Agregar más si necesitas múltiples círculos -->
               {/each}
 
               {#if parseInt(rating(entry.favRate)) == 1}
@@ -961,7 +955,7 @@
                   <g filter="url(#filter0_f_87_1461)">
                     <path
                       id="blob0"
-                      fill="#606060"
+                      fill="black"
                       d="M334.766 210.456C472.274 141.598 639.567 197.25 708.425 334.758C777.283 472.267 721.631 639.56 584.123 708.418C446.614 777.276 279.321 721.624 210.463 584.115C141.605 446.607 197.257 279.314 334.766 210.456Z"
                     >
                     </path>
@@ -993,19 +987,12 @@
               </div>
             </div>
           {/if}
-
-          <!--<div class="small-circle">
-            <img src="/images/minus.svg" alt="minus" class="minus">
-          </div>
-          
-          <div class="small-circle">
-            <img src="/images/minus.svg" alt="minus" class="minus">
-          </div> -->
         {/each}
       </div>
     {/each}
   </div>
 
+  <!-- Versión dinámica -->
   <div class="container2">
     <div class="fila-botones" style="margin-bottom: 30px;">
       {#each valoresZodiac as signoZodiac, i}
@@ -1046,7 +1033,6 @@
                       class="platform-img"
                     />
                   </div>
-                  <!-- Agregar más si necesitas múltiples círculos -->
                 {/each}
 
                 {#if parseInt(rating(entry.favRate)) == 1}
@@ -1244,7 +1230,7 @@
                     <g filter="url(#filter0_f_87_1461)">
                       <path
                         id="blob0"
-                        fill="#606060"
+                        fill="black"
                         d="M334.766 210.456C472.274 141.598 639.567 197.25 708.425 334.758C777.283 472.267 721.631 639.56 584.123 708.418C446.614 777.276 279.321 721.624 210.463 584.115C141.605 446.607 197.257 279.314 334.766 210.456Z"
                       >
                       </path>
@@ -1293,13 +1279,13 @@
   :global(body) {
     font-family: "Poppins", sans-serif;
     background-image: linear-gradient(#ff2f00 -50%, #3719fb 150%);
-    zoom: 60%;
+    zoom: 70%;
   }
 
   .colores-lenguaje {
-    width: 75%;
-    font-size: 22px;
-    font-weight: medium;
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
   }
 
   .botones-filtro {
@@ -1307,6 +1293,8 @@
     width: 15%;
     font-weight: bold;
     border: solid 7px black;
+    background-color: rgb(255, 120, 209, 0.8);
+    color: black;
     height: 60px;
     margin-bottom: 40px;
     margin-right: 10px;
@@ -1316,7 +1304,11 @@
   }
 
   #activado {
-    background-color: #ff2e00;
+    background-image: linear-gradient(
+      rgba(164, 0, 247, 0.5),
+      rgb(255, 120, 209, 0),
+      rgba(164, 0, 247, 0.5)
+    );
   }
 
   .label-switch {
@@ -1329,15 +1321,6 @@
     position: relative;
     transition: 0.2s;
   }
-
-  /*  .big-circle-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    top: 150px;
-    gap: 250px;
-  }*/
 
   .label-switch::after {
     content: "";
@@ -1370,21 +1353,17 @@
   }
 
   .platform-img {
-    /*position: relative; para centrar "manualmente"
-    left: 20%;
-    top: 10%;*/
     width: 20px;
   }
 
   .small-circle {
     width: 40px;
     height: 40px;
-    background-color: black; /* Elige el color que prefieras */
+    background-color: black;
     border-radius: 50%;
     position: absolute;
     display: flex;
     justify-content: center;
-    /* Ajustar top y left para posicionar correctamente */
   }
 
   #blob0 {
@@ -1444,9 +1423,9 @@
     margin-top: 50px;
     justify-content: center;
     align-items: center;
-    -webkit-animation: spin 6s linear infinite;
-    -moz-animation: spin 6s linear infinite;
-    animation: spin 6s linear infinite;
+    -webkit-animation: spin 10s linear infinite;
+    -moz-animation: spin 10s linear infinite;
+    animation: spin 10s linear infinite;
     border: solid 5px black;
   }
 
@@ -1463,8 +1442,6 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    /*margin-right: 50px;
-    margin-bottom: 50px;*/
     animation: float 10s ease-in-out infinite;
   }
 
@@ -1517,9 +1494,7 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    /*margin: auto;*/
     flex-wrap: nowrap;
-    /*max-width: 1000px;*/
     gap: 30px;
     margin-bottom: 100px;
   }

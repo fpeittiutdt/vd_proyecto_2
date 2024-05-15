@@ -1,3 +1,4 @@
+<!-- Componente acordeón usado para el lenguaje visual-->
 <script>
   export let open = false;
   import { slide } from "svelte/transition";
@@ -25,7 +26,7 @@
 
 <style>
   div.accordion {
-    margin-bottom: 100px;
+    margin-bottom: 30px;
     text-align: center;
   }
 
