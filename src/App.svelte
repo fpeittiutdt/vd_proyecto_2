@@ -14,8 +14,6 @@
 
   /* Definimos las constantes */
   let valoresZodiac = [
-    "Sagitario",
-    "Piscis",
     "Aries",
     "Tauro",
     "Géminis",
@@ -26,6 +24,8 @@
     "Leo",
     "Acuario",
     "Capricornio",
+    "Sagitario",
+    "Piscis",
   ];
 
   let genreList = [
@@ -266,16 +266,14 @@
 
   // Función para manejar los filtros de la versión dinámica
   function changeFilter(filtro, id) {
-    
     if (ultimo_id != null) {
       let boton_ultimo = document.getElementById("activado");
       boton_ultimo.id = ultimo_id;
     }
-    if(id == ultimo_id){
+    if (id == ultimo_id) {
       ultimo_id = null;
       dataByZodiac = fillDataByZodiac(series, null);
-    }
-    else{
+    } else {
       const boton_id = document.getElementById(id);
       ultimo_id = boton_id.id;
       boton_id.id = "activado";
@@ -297,7 +295,6 @@
         switch_text.style.left = "17px";
         switch_text.style.removeProperty("right");
         switch_button.style.backgroundColor = "rgb(0, 224, 255, 1)";
-
       } else {
         container1.style.display = "flex";
         container2.style.display = "none";
@@ -312,7 +309,6 @@
   });
 
   let valor = "Estático";
-
 </script>
 
 <main>
@@ -324,10 +320,19 @@
       <p class="bajada">Explorando la clase a través de datos</p>
     </h3>
 
-    <div class="switch-container" style="position: absolute; top: 100px; right: 100px;">
-      <input id="switch" type="checkbox"/>
-      <label for="switch" class="label-switch" style="display: flex; align-items: center; justify-content: center;">
-        <p id="texto-switch" style="position: absolute; right: 35px;">{valor}</p>
+    <div
+      class="switch-container"
+      style="position: absolute; top: 100px; right: 100px;"
+    >
+      <input id="switch" type="checkbox" />
+      <label
+        for="switch"
+        class="label-switch"
+        style="display: flex; align-items: center; justify-content: center;"
+      >
+        <p id="texto-switch" style="position: absolute; right: 35px;">
+          {valor}
+        </p>
       </label>
     </div>
   </div>
@@ -1348,7 +1353,7 @@
     position: absolute;
   }
 
-  #texto-switch{
+  #texto-switch {
     font-size: 22px;
   }
 
