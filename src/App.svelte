@@ -275,38 +275,51 @@
 
   function changeFilter(filtro, id) {
     // Obtener todos los botones
-    const botones = document.querySelectorAll(".botones-filtro");
-    const boton_id = document.getElementById(id);
     if (ultimo_id != null) {
       let boton_ultimo = document.getElementById("activado");
       boton_ultimo.id = ultimo_id;
     }
-    ultimo_id = boton_id.id;
-    boton_id.id = "activado";
-    console.log(boton_id.id);
-    console.log("aaaaa");
-    console.log(series);
-    dataByZodiac = fillDataByZodiac(series, filtro);
-    console.log(dataByZodiac);
+    if(id == ultimo_id){
+      ultimo_id = null;
+      dataByZodiac = fillDataByZodiac(series, null);
+    }
+    else{
+      const boton_id = document.getElementById(id);
+      ultimo_id = boton_id.id;
+      boton_id.id = "activado";
+      dataByZodiac = fillDataByZodiac(series, filtro);
+    }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     var switch_button = document.getElementById("switch");
+    var switch_text = document.getElementById("texto-switch");
     function changeMode() {
       let container1 = document.querySelector(".container1");
       let container2 = document.querySelector(".container2");
       if (switch_button.checked) {
         container1.style.display = "none";
         container2.style.display = "flex";
-        console.log(circles_entry);
+        valor = "Dinamico";
+        switch_text.style.left = "17px";
+        switch_text.style.removeProperty("right");
+        switch_button.style.backgroundColor = "rgb(0, 224, 255, 1)";
+
       } else {
         container1.style.display = "flex";
         container2.style.display = "none";
+        valor = "Estatico";
+        switch_text.style.right = "35px";
+        switch_text.style.removeProperty("left");
+        switch_button.style.backgroundColor = "rgb(0, 224, 255, 0.5)";
       }
     }
 
     switch_button.addEventListener("click", changeMode);
   });
+
+  let valor = "Estatico";
+
 </script>
 
 <main>
@@ -317,9 +330,11 @@
       <p class="bajada">Explorando la clase a través de datos</p>
     </h3>
 
-    <div class="switch-container">
-      <input id="switch" type="checkbox" />
-      <label for="switch" class="label-switch"></label>
+    <div class="switch-container" style="position: absolute; top: 100px; right: 100px;">
+      <input id="switch" type="checkbox"/>
+      <label for="switch" class="label-switch" style="display: flex; align-items: center; justify-content: center;">
+        <p id="texto-switch" style="position: absolute; right: 35px;">{valor}</p>
+      </label>
     </div>
   </div>
 
@@ -1079,7 +1094,7 @@
                     </svg>
                   </div>
                 {:else if parseInt(rating(entry.favRate)) == 2}
-                  <div class="-0">
+                  <div class="data-entry-0">
                     <svg
                       viewBox="0 0 500 500"
                       xmlns="http://www.w3.org/2000/svg"
@@ -1277,7 +1292,7 @@
 
   :global(body) {
     font-family: "Poppins", sans-serif;
-    background-image: linear-gradient(#ff2e00, #3919fb);
+    background-image: linear-gradient(#ff2f00 -50%, #3719fb 150%);
     zoom: 60%;
   }
 
@@ -1306,9 +1321,9 @@
 
   .label-switch {
     display: inline-block;
-    width: 65px;
-    height: 33px;
-    background-color: gray;
+    width: 170px;
+    height: 50px;
+    background-color: rgba(115, 198, 209, 0.863);
     border-radius: 100px;
     cursor: pointer;
     position: relative;
@@ -1327,18 +1342,18 @@
   .label-switch::after {
     content: "";
     display: block;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
     background-color: white;
     border-radius: 100px;
     position: absolute;
-    top: 4px;
-    left: 3px;
+    top: 4.6px;
+    left: 5px;
     transition: 0.2s;
   }
 
   #switch:checked + .label-switch::after {
-    left: 36px;
+    left: 124px;
   }
 
   #switch:checked + .label-switch {
@@ -1348,6 +1363,10 @@
   #switch {
     visibility: hidden;
     position: absolute;
+  }
+
+  #texto-switch{
+    font-size: 22px;
   }
 
   .platform-img {
@@ -1553,6 +1572,9 @@
 
   .fila-botones {
     flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
   }
 </style>
